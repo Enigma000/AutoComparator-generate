@@ -1,4 +1,5 @@
 import Entity.d;
+import Entity.sub;
 
 import java.io.File;
 import java.lang.annotation.Annotation;
@@ -7,7 +8,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 public class AutoComparator {
-    String path = "Put your path here";
+    String path = "/Users/Rx-zpc/Desktop/git clone/AutoComparator/src/Entity";
     File classes = new File(path);
     static Map<Class<?>,Comparator> comparatorMap = new HashMap<>();
     public void generate() throws Exception{
@@ -33,9 +34,10 @@ public class AutoComparator {
                                             if ((compare = compareBasic(temp.getClass(), field, o1, o2)) == 0) continue;
                                             else return compare;
                                         } else {
-                                            if (containAnnotation(field.getClass())) {
-
-                                                return recursion(field.getClass(), field.get(o1), field.get(o2));
+                                            if (containAnnotation(temp.getClass())) {
+                                                int compare = 0;
+                                                if ((compare = recursion(temp.getClass(), field.get(o1), field.get(o2))) == 0) continue;
+                                                else return compare;
 
                                             }
                                         }
@@ -75,9 +77,10 @@ public class AutoComparator {
     private static int recursion (Class<?> clazz, Object o1,Object o2) throws Exception{
         Field[] fields = clazz.getDeclaredFields();
         for(Field field:fields){
-            if(isBaseDataType(field.getClass())){
+            Object temp = field.get(o1);
+            if(isBaseDataType(temp.getClass())){
                 return compareBasic(clazz,field,o1,o2);
-            }else return recursion(field.getClass(),field.get(o1),field.get(02));
+            }else return recursion(temp.getClass(),field.get(o1),field.get(02));
         }
         return 0;
     }
@@ -206,10 +209,12 @@ public class AutoComparator {
         AutoComparator a = new AutoComparator();
         a.generate();
         d a1 = new d();
-        a1.a = 1;
+        a1.a = new sub();
+        a1.a.a = 1;
         a1.b = 2;
         d a2 = new d();
-        a2.a = 1;
+        a2.a = new sub();
+        a2.a.a = 1;
         a2.b = 1;
         List<d> list = new ArrayList<>();
         list.add(a1);

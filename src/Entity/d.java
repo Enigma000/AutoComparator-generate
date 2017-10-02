@@ -5,14 +5,14 @@ package Entity;
  */
 @DynamicCOMP
 public  class d {
-public int a ;
+    public sub a ;
     public  int b ;
 
-    public int getA() {
+    public sub getA() {
         return a;
     }
 
-    public void setA(int a) {
+    public void setA(sub a) {
         this.a = a;
     }
 
